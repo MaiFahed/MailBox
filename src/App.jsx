@@ -2,6 +2,7 @@ import './App.css';
 import MailNav from "./components/MailNav";
 import Messages from './components/Messages';
 import SelectedMsg from './components/SelectedMsg';
+import React, { useState, useEffect } from "react";
 
 
 function App() {
@@ -16,9 +17,9 @@ function App() {
         <Messages/>
       </div>
 
-      <div className='selectedMsg'>
+      {/* <div className='selectedMsg'>
         <SelectedMsg/>
-      </div>
+      </div> */}
 
     </div>
   );

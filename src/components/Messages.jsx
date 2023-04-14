@@ -1,106 +1,51 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import SelectedMsg from "./SelectedMsg";
 
-const Messages = () => {
+function Messages() {
+    const [messages, setMessages] = useState([]);
+    const [activeIndex, setActiveIndex] = useState(null);
+    const [selectedMessage, setSelectedMessage] = useState(null);
+
+    useEffect(() => {
+        fetch("/mails.json")
+            .then((response) => response.json())
+            .then((data) => setMessages(data));
+    }, []);
+
+    const handleItemClick = (index) => {
+        setActiveIndex(index);
+        setSelectedMessage(messages[index]);
+    };
+
     return (
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small>3 days ago</small>
+        <div className="container">
+            <div className="row">
+                <div className="col-md-4">
+                    <ul className="list-group">
+                        {messages.map((message, index) => (
+                            <li
+                                key={index}
+                                className={`list-group-item ${index === activeIndex ? "active" : ""
+                                    }`}
+                                onClick={() => handleItemClick(index)}
+                            >
+                                <h5>{message.name}</h5>
+                                <p id="brief">{message.brief}</p>
+                                <small>{new Date(message.date).toLocaleDateString()}</small>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small>And some small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-body-secondary">3 days ago</small>
+                <div className="col-md-8">
+                    {selectedMessage && (
+                        <SelectedMsg name={selectedMessage.name} brief={selectedMessage.brief}
+                            message={selectedMessage.message} date={selectedMessage.date}
+                        />
+                    )}
                 </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-body-secondary">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-body-secondary">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-body-secondary">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-body-secondary">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-body-secondary">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-body-secondary">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-body-secondary">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-body-secondary">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-body-secondary">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-body-secondary">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-body-secondary">And some muted small print.</small>
-            </a>
+            </div>
         </div>
     );
 }
 
-export default Messages
+export default Messages;
